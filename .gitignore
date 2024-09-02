@@ -1,6 +1,6 @@
 # Created by https://www.toptal.com/developers/gitignore/api/flutter,androidstudio,xcode,android,macos,windows
 # Edit at https://www.toptal.com/developers/gitignore?templates=flutter,androidstudio,xcode,android,macos,windows
-
+.env
 ### Android ###
 # Gradle files
 .gradle/
