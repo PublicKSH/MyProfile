@@ -195,7 +195,8 @@ xcuserdata/
 
 # Generated files
 bin/
-gen/
+# flutter_gen 으로 생성된 code git에 upload
+# gen/
 out/
 
 # Gradle files

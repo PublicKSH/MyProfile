@@ -1,93 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:my_profile/providers/theme_provider.dart';
+import 'package:my_profile/res/styles.dart';
+import 'package:my_profile/views/root/view/root_view.dart';
+import 'package:my_profile/views/root/viewModel/root_view_model.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  final GoRouter _router = GoRouter(
-    routes: [
-      GoRoute(
-        path: '/',
-        builder: (context, state) => HomePage(),
-        routes: [
-          GoRoute(
-            path: 'child1',
-            builder: (context, state) => ChildPage1(),
-            routes: [
-              GoRoute(
-                path: 'child2',
-                builder: (context, state) => ChildPage2(),
-              ),
-            ],
-          ),
-        ],
-      ),
-    ],
-  );
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: _router,
-      title: 'GoRouter Example',
-    );
-  }
-}
+    final themeProvider = Provider.of<ThemeProvider>(context);
 
-class HomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Home Page'),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            context.go('/child1');
-          },
-          child: Text('Go to Child Page 1'),
-        ),
-      ),
-    );
-  }
-}
-
-class ChildPage1 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Child Page 1'),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            context.go('/child1/child2');
-          },
-          child: Text('Go to Child Page 2'),
-        ),
-      ),
-    );
-  }
-}
-
-class ChildPage2 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Child Page 2'),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            context.pop();
-          },
-          child: Text('Go Back to Child Page 1'),
-        ),
+    return ChangeNotifierProvider(
+      create: (context) => RootViewModel(),
+      child: MaterialApp(
+        title: 'PublicKSH Profile',
+        theme: lightTheme,
+        darkTheme: darkTheme,         
+        themeMode: themeProvider.themeData,
+        home: const RootView(),
       ),
     );
   }
